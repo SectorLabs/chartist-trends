@@ -14,7 +14,7 @@
   }
 }(this, function () {
 
-/* Chartist.js 0.1.9
+/* Chartist.js 0.1.11
  * Copyright © 2021 Gion Kunz
  * Free to use under either the WTFPL license or the MIT license.
  * https://raw.githubusercontent.com/gionkunz/chartist-js/master/LICENSE-WTFPL
@@ -26,7 +26,7 @@
  * @module Chartist.Core
  */
 var Chartist = {
-  version: '0.1.9'
+  version: '0.1.11'
 };
 
 (function (window, document, Chartist) {
@@ -3378,7 +3378,7 @@ var Chartist = {
       // index, value and meta data
       var path = smoothing(pathCoordinates, pathData);
 
-/*
+
       // If we should show points we need to create them now to avoid secondary loop
       // Points are drawn from the pathElements returned by the interpolation function
       // Small offset for Firefox to render squares correctly
@@ -3411,7 +3411,7 @@ var Chartist = {
           });
         }.bind(this));
       }
-*/
+
       if(seriesOptions.showLine) {
         var line = seriesElement.elem('path', {
           d: path.stringify()
