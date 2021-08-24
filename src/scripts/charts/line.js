@@ -194,7 +194,7 @@
       // index, value and meta data
       var path = smoothing(pathCoordinates, pathData);
 
-/*
+
       // If we should show points we need to create them now to avoid secondary loop
       // Points are drawn from the pathElements returned by the interpolation function
       // Small offset for Firefox to render squares correctly
@@ -227,7 +227,7 @@
           });
         }.bind(this));
       }
-*/
+
       if(seriesOptions.showLine) {
         var line = seriesElement.elem('path', {
           d: path.stringify()
