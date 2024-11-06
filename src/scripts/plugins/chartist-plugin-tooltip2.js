@@ -15,6 +15,8 @@
             y: 0,
         },
 
+        showAxisTooltips: true,
+
         // Value transform function
         // It receives a single argument that contains the current value
         // "this" is the current chart
@@ -107,6 +109,9 @@
                 }
 
                 showTooltips(closestPointsOnX);
+                if (options.showAxisTooltips === false) {
+                    return;
+                }
                 showAxisTooltips(closestPointsOnX[0].pixelX, currentYPosition, {
                     x: closestPointsOnX[0].x,
                     y: axisY.projectPixel(currentYPosition - chartRect.y2)
@@ -119,6 +124,9 @@
              */
             function showTooltips(points) {
                 var meta;
+                var chartOptions = chart.options.plugins?.find(plugin => plugin.name === 'tooltip2')?.options;
+
+                var currentOptions = {...options, ...chartOptions};
 
                 if (!points) {
                     return;
@@ -137,17 +145,26 @@
                     var point = p.point;
                     var i = p.i;
                     var tooltipElement = getTooltipElement(i);
-                    var textMarkup = options.template;
+                    var textMarkup = currentOptions.template;
                     var value = point.y;
+                    var xValue = point.x;
 
-                    if (typeof options.valueTransformFunction === 'function') {
-                        value = options.valueTransformFunction.call(chart, value);
+                    if (typeof currentOptions.valueTransformFunction === 'function') {
+                        value = currentOptions.valueTransformFunction.call(chart, value);
                     } else if (typeof axisY.options.labelInterpolationFnc === 'function') {
                         value = axisY.options.labelInterpolationFnc(value);
                     }
 
+                    if (typeof currentOptions.xValueTransformFunction === 'function') {
+                        xValue = currentOptions.xValueTransformFunction.call(chart, xValue);
+                    } else if (typeof axisX.options.labelInterpolationFnc === 'function') {
+                        xValue = axisX.options.labelInterpolationFnc(value);
+                    }
+
                     // value
-                    textMarkup = textMarkup.replace(new RegExp('{{value}}', 'gi'), value);
+                    textMarkup = textMarkup
+                        .replace(new RegExp('{{value}}', 'gi'), value)
+                        .replace(new RegExp('{{xValue}}', 'gi'), xValue);
 
                     tooltipElement.innerHTML = textMarkup;
                     tooltipElement.removeAttribute('hidden');
@@ -310,12 +327,17 @@
             }
 
             /**
-             * Set tooltip position
+             * Set tooltip position and provide positioning hints
              * @param Element relativeElement
              */
             function setTooltipPosition(index, relativeElement, offset) {
                 var tooltipElement = tooltipElements[index];
                 var positionData = getTooltipPosition(tooltipElement, relativeElement, offset, true);
+                var { width, height } = relativeElement.getBoundingClientRect();
+                tooltipElement.classList.toggle('ct-tooltip-position-left', offset.x < (width / 3));
+                tooltipElement.classList.toggle('ct-tooltip-position-right', offset.x > (2 * width / 3));
+                tooltipElement.classList.toggle('ct-tooltip-position-top', offset.y < (height / 3));
+                tooltipElement.classList.toggle('ct-tooltip-position-bottom', offset.y > (2 * height / 3));
 
                 tooltipElement.style.transform = 'translate(' + Math.round(positionData.left) + 'px, ' + Math.round(positionData.top) + 'px)';
             }
