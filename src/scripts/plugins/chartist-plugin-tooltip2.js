@@ -18,9 +18,12 @@
         showAxisTooltips: true,
 
         // Value transform function
-        // It receives a single argument that contains the current value
-        // "this" is the current chart
-        // It must return the formatted value to be added in the tooltip (eg: currency format)
+        //
+        // It receives the value and the xPosition of the value,
+        // with "this" bound to the current chart
+        //
+        // The returned value will be used to replace the `template`
+        // params, and can be a primitive or an object
         valueTransformFunction: null,
         xValueTransformFunction: null,
 
@@ -150,7 +153,7 @@
                     var xValue = point.x;
 
                     if (typeof currentOptions.valueTransformFunction === 'function') {
-                        value = currentOptions.valueTransformFunction.call(chart, value);
+                        value = currentOptions.valueTransformFunction.call(chart, value, xValue);
                     } else if (typeof axisY.options.labelInterpolationFnc === 'function') {
                         value = axisY.options.labelInterpolationFnc(value);
                     }
@@ -161,10 +164,19 @@
                         xValue = axisX.options.labelInterpolationFnc(value);
                     }
 
-                    // value
-                    textMarkup = textMarkup
-                        .replace(new RegExp('{{value}}', 'gi'), value)
-                        .replace(new RegExp('{{xValue}}', 'gi'), xValue);
+                    if (typeof value === 'object') {
+                        for (const key in value) {
+                            textMarkup = textMarkup
+                                .replace(
+                                    new RegExp(`{{value.${key}}}`, 'gi'),
+                                    value[key] != undefined ? value[key] : ''
+                                );
+                        }
+                    } else {
+                        textMarkup = textMarkup
+                            .replace(new RegExp('{{value}}', 'gi'), value)
+                            .replace(new RegExp('{{xValue}}', 'gi'), xValue);
+                    }
 
                     tooltipElement.innerHTML = textMarkup;
                     tooltipElement.removeAttribute('hidden');
@@ -197,7 +209,7 @@
                 var xvalue = point.x;
 
                 if (typeof options.valueTransformFunction === 'function') {
-                    value = options.valueTransformFunction.call(chart, value);
+                    value = options.valueTransformFunction.call(chart, value, xvalue);
                 } else if (typeof axisY.options.labelInterpolationFnc === 'function') {
                     value = axisY.options.labelInterpolationFnc(value);
                 }
