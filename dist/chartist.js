@@ -16,7 +16,7 @@
 }(this, function () {
 
 /* Chartist.js 0.1.13
- * Copyright © 2024 Gion Kunz
+ * Copyright © 2025 Gion Kunz
  * Free to use under either the WTFPL license or the MIT license.
  * https://raw.githubusercontent.com/gionkunz/chartist-js/master/LICENSE-WTFPL
  * https://raw.githubusercontent.com/gionkunz/chartist-js/master/LICENSE-MIT
@@ -3613,6 +3613,9 @@ var Chartist = {
             y: 0,
         },
 
+        // An array of series names for which tooltips should be rendered.
+        // If not provided, a tooltip will render for every series
+        includeForSeries: null,
         showAxisTooltips: true,
 
         // Value transform function
@@ -4017,7 +4020,12 @@ var Chartist = {
                 }
 
                 chart.on('draw', function(data) {
-                    if (data.type == 'line') {
+                    const shouldInclude =
+                        data.type == 'line' &&
+                        (options.includeForSeries == null ||
+                            options.includeForSeries?.includes(data.series.name));
+
+                    if (shouldInclude) {
                         chartRect = data.chartRect;
                         axisY = data.axisY;
 

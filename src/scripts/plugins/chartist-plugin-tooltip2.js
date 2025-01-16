@@ -15,6 +15,9 @@
             y: 0,
         },
 
+        // An array of series names for which tooltips should be rendered.
+        // If not provided, a tooltip will render for every series
+        includeForSeries: null,
         showAxisTooltips: true,
 
         // Value transform function
@@ -419,7 +422,12 @@
                 }
 
                 chart.on('draw', function(data) {
-                    if (data.type == 'line') {
+                    const shouldInclude =
+                        data.type == 'line' &&
+                        (options.includeForSeries == null ||
+                            options.includeForSeries?.includes(data.series.name));
+
+                    if (shouldInclude) {
                         chartRect = data.chartRect;
                         axisY = data.axisY;
 
