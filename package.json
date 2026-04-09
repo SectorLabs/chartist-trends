@@ -2,7 +2,7 @@
   "name": "@sector-labs/chartist-trends",
   "title": "Trends with Chartist.js",
   "description": "Simple, responsive trends",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Sector Labs <open-source@sectorlabs.ro> / Gion Kunz",
   "homepage": "https://github.com/SectorLabs/chartist-trends",
   "repository": {
@@ -77,7 +77,7 @@
     "js-yaml": "4.1.1"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
     "start": "./node_modules/.bin/grunt",
