@@ -1,16 +1,16 @@
 {
-  "name": "chartist-trends",
+  "name": "@sector-labs/chartist-trends",
   "title": "Trends with Chartist.js",
   "description": "Simple, responsive trends",
   "version": "0.1.14",
   "author": "Gion Kunz",
-  "homepage": "https://github.com/cipix2000/chartist-trends",
+  "homepage": "https://github.com/SectorLabs/chartist-trends",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cipix2000/chartist-trends.git"
+    "url": "https://github.com/SectorLabs/chartist-trends.git"
   },
   "bugs": {
-    "url": "https://github.com/cipix2000/chartist-trends/issues"
+    "url": "https://github.com/SectorLabs/chartist-trends/issues"
   },
   "keywords": [
     "chartist",
