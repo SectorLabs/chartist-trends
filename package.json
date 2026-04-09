@@ -2,8 +2,8 @@
   "name": "@sector-labs/chartist-trends",
   "title": "Trends with Chartist.js",
   "description": "Simple, responsive trends",
-  "version": "0.1.14",
-  "author": "Gion Kunz",
+  "version": "1.0.0",
+  "author": "Sector Labs <open-source@sectorlabs.ro> / Gion Kunz",
   "homepage": "https://github.com/SectorLabs/chartist-trends",
   "repository": {
     "type": "git",
@@ -33,11 +33,11 @@
   "licenses": [
     {
       "type": "WTFPL",
-      "url": "https://github.com/gionkunz/chartist-js/blob/master/LICENSE-WTFPL"
+      "url": "https://github.com/SectorLabs/chartist-trends/blob/develop/LICENSE-WTFPL"
     },
     {
       "type": "MIT",
-      "url": "https://github.com/gionkunz/chartist-js/blob/master/LICENSE-MIT"
+      "url": "https://github.com/SectorLabs/chartist-trends/blob/develop/LICENSE-MIT"
     }
   ],
   "dependencies": {
